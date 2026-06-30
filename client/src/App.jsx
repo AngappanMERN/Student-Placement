@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import { useAuth } from './context/AuthContext';
 
@@ -23,11 +23,13 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   return children;
 };
 
+const RouterComponent = import.meta.env.VITE_USE_HASH_ROUTER === 'true' ? HashRouter : BrowserRouter;
+
 function App() {
   const { user } = useAuth();
 
   return (
-    <Router>
+    <RouterComponent>
       <Suspense fallback={<div className="h-screen w-full flex items-center justify-center text-primary font-medium text-lg">Loading App...</div>}>
         <Routes>
           <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
