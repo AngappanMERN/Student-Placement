@@ -53,7 +53,7 @@ function App() {
           </Route>
         </Routes>
       </Suspense>
-    </Router>
+    </RouterComponent>
   );
 }
 
